@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>광고·릴스·콘텐츠의 국룰 구조 PRD</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            scroll-snap-type: y mandatory;
+            overflow-y: scroll;
+            height: 100vh;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        /* 색상 테마 */
+        .bg-deep-navy { background: #142850; }
+        .bg-navy-light { background: #273C75; }
+        .bg-white { background: #ffffff; color: #000000; }
+        .bg-black { background: #000000; }
+        .bg-gray { background: #f5f5f5; color: #000000; }
+
+        /* 타이포그래피 */
+        .title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #888;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .content-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 20px 0;
+            max-width: 1000px;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        .white-box {
+            background: #ffffff;
+            color: #000000;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 20px 0;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .navy-box {
+            background: #273C75;
+            color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 20px 0;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .black-box {
+            background: #000000;
+            color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 20px 0;
+            max-width: 1000px;
+            width: 100%;
+            border: 1px solid #333;
+        }
+
+        .highlight {
+            color: #273C75;
+            font-weight: 700;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+            font-size: 1.2rem;
+            line-height: 2;
+        }
+
+        .bullet-list li {
+            padding-left: 30px;
+            position: relative;
+            margin: 15px 0;
+        }
+
+        .bullet-list li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #273C75;
+            font-size: 1.5rem;
+        }
+
+        .emoji {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #273C75;
+            border-radius: 25px;
+            margin: 5px;
+            font-size: 1rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background: #273C75;
+            padding: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+
+        .emphasis-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 30px 0;
+            color: #273C75;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: #273C75;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-weight: 700;
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 2rem;
+            margin: 20px 0;
+            color: #273C75;
+        }
+
+        .quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            text-align: center;
+            padding: 30px;
+            border-left: 5px solid #273C75;
+            margin: 30px 0;
+            background: rgba(39, 60, 117, 0.1);
+        }
+
+        .warning-box {
+            background: #dc3545;
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .success-box {
+            background: #28a745;
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+        }
+
+        .number-badge {
+            display: inline-block;
+            background: #273C75;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-right: 10px;
+        }
+
+        /* 스크롤 인디케이터 */
+        .scroll-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 20px;
+            z-index: 1000;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator" id="scrollIndicator">슬라이드 1 / 43</div>
+
+    <div class="slide-container" id="slideContainer">
+
+        <!-- 슬라이드 1: 표지 -->
+        <section class="slide bg-deep-navy">
+            <h1 class="title animate">광고·릴스·콘텐츠의<br>국룰 구조 PRD</h1>
+            <p class="subtitle animate" style="animation-delay: 0.2s;">타겟 → 오퍼 → 크리에이티브 → 랜딩 → 전환</p>
+        </section>
+
+        <!-- 슬라이드 2: 강의 시작 질문 1 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">🔥 강의 시작 질문</h2>
+                <div class="quote" style="background: #f8f9fa; color: #000;">
+                    지금 광고 돌리고 계신 분들,<br>
+                    <strong style="font-size: 2rem; color: #142850;">하루에 광고비 얼마 태우고 계세요?</strong>
+                </div>
+                <ul class="bullet-list" style="color: #333; font-size: 1.3rem; text-align: center; list-style: none;">
+                    <li>5천 원</li>
+                    <li>1만 원</li>
+                    <li>2만 원</li>
+                    <li>5만 원</li>
+                    <li>10만 원 이상</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 슬라이드 3: 강의 시작 질문 2 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">💬 질문 2</h2>
+                <div class="quote" style="background: #f8f9fa; color: #000;">
+                    <strong style="font-size: 1.8rem; color: #142850;">광고 반경 설정해보신 분 계세요?</strong><br><br>
+                    몇 km로 설정하셨나요?
+                </div>
+                <div class="navy-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.2rem; line-height: 1.8;">보통 여기서:</p>
+                    <ul class="bullet-list" style="margin-top: 20px;">
+                        <li>"그게 뭐예요?"</li>
+                        <li>"전국이요…"</li>
+                        <li>"서울 전체요…"</li>
+                    </ul>
+                </div>
+                <p class="emphasis-text" style="color: #142850; margin-top: 30px;">
+                    👉 이게 이미 <span class="highlight">오늘 강의 필요성 증명</span>임.
+                </p>
+            </div>
+        </section>
+
+        <!-- 슬라이드 4: 매출 구간별 성장 전략 소개 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">📌 매출 구간별 성장 전략 & 광고(구조) 정의</h2>
+                <p style="font-size: 1.5rem; text-align: center; margin-top: 30px;">
+                    300만원 이하 → 1000만원 이상까지
+                </p>
+            </div>
+        </section>
+
+        <!-- 슬라이드 5: 매출 300만원 이하 구간 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box" style="max-width: 1200px;">
+                <h2 class="section-title" style="color: #142850;">1️⃣ 매출 300만원 이하 구간</h2>
+                <p class="emphasis-text" style="font-size: 1.5rem;">핵심 키워드: 데이터 축적 / 생존 구간</p>
+
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div>
+                        <div class="warning-box">
+                            <h3 style="margin-bottom: 15px;">❌ 이 구간에서 하면 안 되는 것</h3>
+                            <ul style="list-style: none; font-size: 1.1rem; line-height: 2;">
+                                <li>브랜딩 고민</li>
+                                <li>단가 인상</li>
+                                <li>예쁘게 보이기 위한 콘텐츠</li>
+                                <li>"나만의 색" 찾기</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="success-box">
+                            <h3 style="margin-bottom: 15px;">⭕ 반드시 해야 하는 것</h3>
+                            <p style="font-size: 1.3rem; font-weight: 700;">데이터를 쌓는 것</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="navy-box" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 20px;">데이터의 정의</h3>
+                    <ul class="bullet-list" style="font-size: 1.1rem;">
+                        <li>시술 전/후 작업물</li>
+                        <li>고객 후기</li>
+                        <li>상담 기록</li>
+                        <li>실패/개선 경험</li>
+                        <li>반복 시술 경험</li>
+                    </ul>
+                </div>
+
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.5rem; text-align: center;">
+                        👉 이 구간의 목표는<br>
+                        <strong style="font-size: 1.8rem;">"잘하는 사람"이 아니라<br>"많이 해본 사람"이 되는 것</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 6: 300만원 구간 광고 역할 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">광고의 역할 (300만원 이하 구간)</h2>
+
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card" style="background: #f8f9fa; color: #666;">
+                        <h3 style="color: #999;">매출 폭발 ❌</h3>
+                    </div>
+                    <div class="card" style="background: #f8f9fa; color: #666;">
+                        <h3 style="color: #999;">팬 만들기 ❌</h3>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="card" style="background: #28a745;">
+                        <h3>경험치 확보 ⭕</h3>
+                    </div>
+                    <div class="card" style="background: #28a745;">
+                        <h3>데이터 수집 ⭕</h3>
+                    </div>
+                </div>
+
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.5rem; text-align: center;">
+                        광고는 '돈 버는 수단'이 아니라<br>
+                        <strong style="font-size: 1.8rem;">데이터를 빠르게 쌓기 위한 도구</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 7: 매출 500~800만원 구간 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">2️⃣ 매출 500~800만원 구간</h2>
+                <p style="font-size: 1.5rem; text-align: center; margin-bottom: 30px;">
+                    핵심 키워드: 정체성 결정 / 가장 많이 망하는 구간
+                </p>
+
+                <div class="warning-box">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 20px;">이 구간에서 가장 많이 하는 실수</h3>
+                    <ul style="list-style: none; font-size: 1.3rem; line-height: 2;">
+                        <li>가격 갑자기 올리기</li>
+                        <li>광고 중단하기</li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 1.2rem;">
+                        👉 이 두 개를 동시에 하면<br>
+                        매출은 거의 100% 꺾인다.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 8: 단가 인상의 진짜 이유 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box" style="max-width: 1000px;">
+                <h2 class="section-title" style="color: #142850;">❗ 단가 인상의 진짜 이유</h2>
+
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.8rem; text-align: center;">
+                        단가 인상 = 시간 확보
+                    </p>
+                    <p style="font-size: 1.3rem; text-align: center; margin-top: 20px; color: #aaa;">
+                        더 적게 일하고<br>
+                        같은 혹은 더 많은 매출을 만들기 위함
+                    </p>
+                </div>
+
+                <div class="navy-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.2rem; line-height: 2;">
+                        단가를 올리면 손님이 줄어드는 건 정상
+                    </p>
+                    <p style="font-size: 1.3rem; margin-top: 20px;"><strong>문제는:</strong></p>
+                    <ul class="bullet-list" style="margin-top: 15px; font-size: 1.1rem;">
+                        <li>줄어든 손님을 감당할 구조가 있었는가?</li>
+                        <li>왜 이 가격인지 설명 가능한가?</li>
+                        <li>왜 '나'여야 하는지 말할 수 있는가?</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 9: 단가 인상의 조건 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">❗ 단가 인상의 조건</h2>
+
+                <div class="quote" style="background: #142850; color: #fff; border: none; font-size: 1.8rem;">
+                    단가는 원장이 올리는 게 아니라<br>
+                    <strong style="font-size: 2rem;">고객이 허락해야 올라간다.</strong>
+                </div>
+
+                <div class="navy-box" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 20px;">이를 위해 필요한 것:</h3>
+                    <ul class="bullet-list" style="font-size: 1.2rem;">
+                        <li>스토리</li>
+                        <li>일관된 메시지</li>
+                        <li>반복된 빌드업</li>
+                        <li>콘텐츠 축적</li>
+                    </ul>
+                </div>
+
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.5rem; text-align: center;">
+                        가격 인상은<br>
+                        가격 변경이 아니라<br>
+                        <strong style="font-size: 1.8rem;">'신뢰의 결과'</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 10: 500~800 구간에서 해야 할 일 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">이 구간에서 해야 할 일</h2>
+
+                <div class="white-box" style="margin-top: 30px;">
+                    <div class="navy-box" style="margin: 15px 0; padding: 25px;">
+                        <p style="font-size: 1.2rem;"><strong>브랜딩 "정하기"</strong> (보여주기 아님)</p>
+                        <ul style="list-style: none; margin-top: 15px; font-size: 1rem; color: #e0e0e0;">
+                            <li>→ 하나의 방향성 선택</li>
+                            <li>→ 모든 콘텐츠를 그 방향으로 통일</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="warning-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.3rem;">
+                        <strong>광고는 절대 중단하지 말 것</strong><br><br>
+                        단가를 올릴수록 광고는 더 필요하다.<br>
+                        (줄어든 고객을 '이해하는 고객'으로 채워야 함)
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 11: 매출 1000만원 이상 구간 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box" style="max-width: 1200px;">
+                <h2 class="section-title" style="color: #142850;">3️⃣ 매출 1000만원 이상 구간</h2>
+                <p class="emphasis-text" style="font-size: 1.5rem;">핵심 키워드: 확장 / 구조 복제</p>
+
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card" style="background: #f8f9fa; color: #666;">
+                        <h3 style="color: #999;">혼자 더 열심히 ❌</h3>
+                    </div>
+                    <div class="card" style="background: #28a745;">
+                        <h3>확장만이 답 ⭕</h3>
+                    </div>
+                </div>
+
+                <div class="navy-box" style="margin-top: 40px;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 20px;">확장의 대표적 방법 2가지</h3>
+                    <ul class="bullet-list" style="font-size: 1.2rem;">
+                        <li>직원 고용</li>
+                        <li>수강(교육) 사업 시작</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 12: 직원 확장에 대한 현실 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">① 직원 확장에 대한 현실</h2>
+
+                <div class="navy-box" style="margin-top: 30px;">
+                    <ul class="bullet-list" style="font-size: 1.2rem;">
+                        <li>직원은 즉시 수익 ❌</li>
+                        <li>최소 2년은 투자</li>
+                        <li>직원이 매출을 만들어도 체감 수익은 크지 않음</li>
+                        <li>시스템 / 교육 / 관리 필요</li>
+                    </ul>
+                </div>
+
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.5rem; text-align: center;">
+                        직원 확장은<br>
+                        단기 수익 모델이 아니라<br>
+                        <strong style="font-size: 1.8rem;">장기 구조 투자</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 13: 수강(교육) 확장의 진짜 순서 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">② 수강(교육) 확장의 진짜 순서</h2>
+
+                <div class="warning-box">
+                    <h3 style="margin-bottom: 15px;">❌ 잘못된 접근</h3>
+                    <p style="font-size: 1.2rem;">
+                        "오늘부터 수강 오픈합니다"<br>
+                        갑작스러운 상품 출시
+                    </p>
+                </div>
+
+                <div class="success-box" style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">⭕ 올바른 순서</h3>
+                    <div style="font-size: 1.2rem; line-height: 2.5;">
+                        <p><span class="number-badge">1</span> 퍼널 구축</p>
+                        <p><span class="number-badge">2</span> 콘텐츠로 사람 모으기</p>
+                        <p><span class="number-badge">3</span> 팬 형성</p>
+                        <p><span class="number-badge">4</span> 신뢰 축적</p>
+                        <p><span class="number-badge">5</span> 그 다음 상품 출시</p>
+                    </div>
+                </div>
+
+                <div class="white-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.3rem; color: #333; text-align: center;">
+                        수강도 결국 상품 판매일 뿐이고<br>
+                        <strong style="color: #142850; font-size: 1.5rem;">구조 없이 팔리는 건 없다.</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 14: 광고의 정의 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">4️⃣ 광고의 정의 (전 구간 공통)</h2>
+
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card" style="background: #f8f9fa; color: #666;">
+                        <h3 style="color: #999;">광고 = 릴스 / 블로그 / 네이버 ❌</h3>
+                    </div>
+                    <div class="card" style="background: #f8f9fa; color: #666;">
+                        <h3 style="color: #999;">광고 = 돈 태우기 ❌</h3>
+                    </div>
+                </div>
+
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 2.5rem; text-align: center; font-weight: 700;">
+                        ⭕ 광고 = 구조
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 15: 광고 구조 (퍼널) -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box" style="max-width: 1000px;">
+                <h2 class="section-title" style="color: #142850;">광고 구조 (퍼널)</h2>
+
+                <div class="navy-box" style="margin: 20px 0; padding: 30px;">
+                    <p style="font-size: 1.5rem; text-align: center;">유입 (광고)</p>
+                </div>
+                <div class="arrow" style="color: #142850; font-size: 3rem;">↓</div>
+                <div class="navy-box" style="margin: 20px 0; padding: 30px; background: #3b5089;">
+                    <p style="font-size: 1.5rem; text-align: center;">랜딩 (인스타, 블로그, 홈페이지)</p>
+                </div>
+                <div class="arrow" style="color: #142850; font-size: 3rem;">↓</div>
+                <div class="navy-box" style="margin: 20px 0; padding: 30px; background: #4f649d;">
+                    <p style="font-size: 1.5rem; text-align: center;">신뢰 (데이터)</p>
+                </div>
+                <div class="arrow" style="color: #142850; font-size: 3rem;">↓</div>
+                <div class="navy-box" style="margin: 20px 0; padding: 30px; background: #273C75;">
+                    <p style="font-size: 1.5rem; text-align: center;">행동 (예약 / 상담 / 결제)</p>
+                </div>
+
+                <div class="warning-box" style="margin-top: 40px;">
+                    <p style="font-size: 1.3rem;">
+                        이 중 하나라도 빠지면 광고는 실패<br><br>
+                        <strong>광고가 안 되는 게 아니라<br>도착할 구조가 없는 상태</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 16: 구조의 확장성 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">구조의 확장성</h2>
+
+                <div class="white-box" style="margin-top: 30px;">
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px;">
+                        <p style="font-size: 1.2rem;">시술 판매 구조</p>
+                    </div>
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px; background: #3b5089;">
+                        <p style="font-size: 1.2rem;">단가 인상 구조</p>
+                    </div>
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px; background: #4f649d;">
+                        <p style="font-size: 1.2rem;">직원 확장 구조</p>
+                    </div>
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px; background: #273C75;">
+                        <p style="font-size: 1.2rem;">수강 판매 구조</p>
+                    </div>
+                </div>
+
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.8rem; text-align: center;">
+                        👉 모두 동일한 구조<br>
+                        <strong style="font-size: 2rem;">퍼널 + 신뢰 + 전환</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 17: 전체 요약 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box" style="max-width: 1000px;">
+                <h2 class="section-title" style="color: #142850;">5️⃣ 전체 요약 (300 → 1000+)</h2>
+
+                <div style="overflow-x: auto; margin-top: 30px;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 1.2rem;">
+                        <thead>
+                            <tr style="background: #273C75; color: #fff;">
+                                <th style="padding: 20px; text-align: left; border: 1px solid #ddd;">매출 구간</th>
+                                <th style="padding: 20px; text-align: left; border: 1px solid #ddd;">해야 할 행동</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 20px; border: 1px solid #ddd; color: #333;"><strong>300 이하</strong></td>
+                                <td style="padding: 20px; border: 1px solid #ddd; color: #333;">데이터 축적</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 20px; border: 1px solid #ddd; color: #333;"><strong>500~800</strong></td>
+                                <td style="padding: 20px; border: 1px solid #ddd; color: #333;">브랜딩 결정 + 구조 유지</td>
+                            </tr>
+                            <tr style="background: #f8f9fa;">
+                                <td style="padding: 20px; border: 1px solid #ddd; color: #333;"><strong>1000+</strong></td>
+                                <td style="padding: 20px; border: 1px solid #ddd; color: #333;">확장(직원/수강)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="black-box" style="margin-top: 40px;">
+                    <p style="font-size: 2rem; text-align: center; font-weight: 700;">
+                        성장의 핵심은<br>
+                        '노력'이 아니라 <span style="color: #fff;">'순서'</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 18: 최종 정의 -->
+        <section class="slide bg-black">
+            <div class="content-box">
+                <h2 class="section-title">6️⃣ 최종 정의</h2>
+                <div class="quote" style="border-color: #273C75; font-size: 2.5rem; background: transparent;">
+                    광고, 단가, 확장, 수강<br>
+                    이 모든 걸 통틀어<br><br>
+                    <strong style="font-size: 3rem; color: #fff;">우리는 '구조'라고 부른다.</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 19: 핵심 메시지 -->
+        <section class="slide bg-deep-navy">
+            <div class="black-box" style="border: 3px solid #273C75;">
+                <p class="quote" style="border: none; background: transparent; color: #fff; font-size: 1.8rem;">
+                    "여기서 오늘 제일 중요한 얘기 하나 할게요.<br><br>
+                    <strong style="font-size: 2.2rem; color: #fff;">동네 장사는 광고비 많이 쓰는 게임 아닙니다.</strong><br><br>
+                    구조 없이 많이 쓰는 게 제일 위험해요."
+                </p>
+            </div>
+        </section>
+
+        <!-- 슬라이드 5: 적정 광고비 질문 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">❓ 하루 광고비, 얼마가 '적당'하냐?</h2>
+                <div class="arrow">↓</div>
+                <div class="black-box">
+                    <h3 style="font-size: 2rem; text-align: center; margin-bottom: 20px;">결론부터 말하면</h3>
+                    <p style="font-size: 2.5rem; font-weight: 700; text-align: center; color: #fff;">
+                        하루 2만 원이면 충분하다.
+                    </p>
+                    <p style="text-align: center; font-size: 1.3rem; margin-top: 20px; color: #aaa;">
+                        단, <strong style="color: #fff;">조건이 있다.</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 6: 광고비 비율 기준 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box" style="max-width: 1200px;">
+                <h2 class="section-title" style="color: #142850;">✅ 동네 샵 광고비 현실 기준</h2>
+                <div class="navy-box">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 20px;">1️⃣ 광고비는 "매출 비율"로 봐야 한다</h3>
+                    <div class="quote" style="background: rgba(255,255,255,0.1); border-color: #fff; color: #fff;">
+                        광고비 = 목표 매출의 5~10% 이내
+                    </div>
+                </div>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card">
+                        <h3>월 매출 300만 원</h3>
+                        <p>광고비 월 15~30만 원<br>→ 하루 <strong style="font-size: 1.5rem;">1만~1.5만 원</strong></p>
+                    </div>
+                    <div class="card">
+                        <h3>월 매출 500만 원</h3>
+                        <p>광고비 월 25~50만 원<br>→ 하루 <strong style="font-size: 1.5rem;">1.5만~2만 원</strong></p>
+                    </div>
+                </div>
+                <p class="emphasis-text" style="margin-top: 30px;">
+                    👉 이 이상 쓰면 <span class="highlight">회수 구조부터 의심해야 함</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- 슬라이드 7: 2만원 이상 불필요 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">2️⃣ 동네 샵이면 "1만 5천 원 이상"은<br>거의 필요 없음</h2>
+                <div class="white-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.3rem; color: #333; line-height: 2; margin-bottom: 20px;"><strong>왜냐면:</strong></p>
+                    <ul class="bullet-list" style="color: #333;">
+                        <li>타겟 반경이 좁고</li>
+                        <li>검색/지역 기반이고</li>
+                        <li>반복 노출이 중요하기 때문</li>
+                    </ul>
+                </div>
+                <div class="black-box" style="margin-top: 30px;">
+                    <p class="quote" style="border: none; background: transparent; color: #fff; font-size: 1.8rem;">
+                        <strong>동네 샵 광고는<br>
+                        '세게 한 번'이 아니라<br>
+                        '가볍게 계속'이 정답</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 8: 반경 설정 실수 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box" style="max-width: 1200px;">
+                <h2 class="section-title" style="color: #142850;">📍 반경 설정 기준</h2>
+                <div class="warning-box">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 20px;">❌ 많이 하는 실수</h3>
+                    <ul style="list-style: none; font-size: 1.3rem; line-height: 2;">
+                        <li>전국</li>
+                        <li>서울 전체</li>
+                        <li>광역시 전체</li>
+                    </ul>
+                    <p style="margin-top: 20px; font-size: 1.2rem;">
+                        → 이러면 <strong>광고비만 새고</strong> 전환 안 됨
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 9: 반경 국룰 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box" style="max-width: 1000px;">
+                <h2 class="section-title" style="color: #142850;">✅ 동네 샵 반경 국룰</h2>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card" style="background: #273C75;">
+                        <h3>도보 상권</h3>
+                        <p style="font-size: 2rem; font-weight: 700; margin-top: 20px;">1~2km</p>
+                    </div>
+                    <div class="card" style="background: #3b5089;">
+                        <h3>차 타고 오는 상권</h3>
+                        <p style="font-size: 2rem; font-weight: 700; margin-top: 20px;">3~5km</p>
+                    </div>
+                </div>
+                <div class="navy-box" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.5rem;">특수 케이스(고가/전문)</h3>
+                    <p style="font-size: 2rem; font-weight: 700; margin-top: 15px;">최대 7km</p>
+                </div>
+                <p class="emphasis-text" style="margin-top: 30px;">
+                    👉 이 이상은 <span class="highlight">동네 장사 아님</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- 슬라이드 10: 광고 세팅 국룰 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">🎯 광고 세팅 국룰</h2>
+                <div class="white-box" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.8rem; color: #142850; margin-bottom: 30px; text-align: center;">동네 샵 기본 세팅 예시</h3>
+                    <div style="font-size: 1.2rem; color: #333; line-height: 2.5;">
+                        <p><span class="number-badge">하루 광고비</span> <strong style="font-size: 1.5rem; color: #142850;">1만~2만 원</strong></p>
+                        <p><span class="number-badge">반경</span> <strong style="font-size: 1.5rem; color: #142850;">3km</strong></p>
+                        <p><span class="number-badge">타겟</span> 연령대 실제 고객 기준 / 관심사 최소화</p>
+                        <p><span class="number-badge">목적</span> "예약" ❌ → "상담/확인/체크" ⭕</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 11: 핵심 한문장 -->
+        <section class="slide bg-black">
+            <div class="content-box">
+                <div class="quote" style="border-color: #273C75; font-size: 2.2rem; background: transparent;">
+                    "광고비가 적어서 안 되는 게 아니라<br><br>
+                    <strong style="font-size: 2.8rem; color: #fff;">구조 없이 쓰기 때문에 비싼 겁니다.</strong>"
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 12: 연결 질문 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box">
+                <div class="quote" style="background: #f8f9fa; color: #000; font-size: 1.5rem;">
+                    "근데요,<br>
+                    하루 2만 원 태워도 안 되는 샵이 있고<br>
+                    1만 원으로도 예약 나오는 샵이 있어요.<br><br>
+                    <strong style="font-size: 2rem; color: #142850;">차이가 뭔지 아세요?</strong>"
+                </div>
+                <div class="arrow" style="color: #142850;">↓</div>
+                <div class="black-box">
+                    <p style="font-size: 2.5rem; font-weight: 700; text-align: center;">
+                        "광고비가 아니라 <span style="color: #fff;">구조</span>입니다."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 13: 목적 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box" style="max-width: 1200px;">
+                <h2 class="section-title" style="color: #142850;">이 문서의 목적</h2>
+                <p style="font-size: 1.3rem; color: #333; text-align: center; margin-bottom: 30px;">
+                    이 문서는 다음과 같은 분들을 위한 가이드입니다
+                </p>
+                <ul class="bullet-list" style="color: #333; font-size: 1.2rem;">
+                    <li>광고를 처음 접하는 원장님</li>
+                    <li>릴스는 만들지만 왜 안 되는지 모르는 원장님</li>
+                    <li>마케팅을 '감'으로만 해왔던 원장님</li>
+                </ul>
+                <div class="navy-box" style="margin-top: 40px;">
+                    <p style="font-size: 1.3rem; text-align: center; line-height: 2;">
+                        이 구조는 유료 광고뿐만 아니라<br>
+                        <strong style="font-size: 1.5rem;">릴스, 블로그, 상세페이지, 상담 구조 등</strong><br>
+                        모든 고객 유입 콘텐츠에 공통으로 적용됩니다
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 14: 타겟 정의 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">1️⃣ 타겟 (Target)</h2>
+                <div class="white-box">
+                    <div class="quote" style="background: #142850; color: #fff; border: none; font-size: 1.8rem;">
+                        <strong>"내가 팔고 싶은 사람"이 아니라<br>
+                        "실제로 돈을 쓰고, 선택을 하는 사람"</strong>
+                    </div>
+                    <p style="font-size: 1.2rem; color: #666; text-align: center; margin-top: 30px;">
+                        타겟은 감으로 정하는 것이 아니라<br>
+                        기존 고객 데이터 분석을 통해 <strong style="color: #142850;">'발견'</strong>하는 것이다
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 15: 타겟 착각 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">❌ 원장님들이 흔히 하는 착각</h2>
+                <div class="grid-2">
+                    <div class="card" style="background: #e8e8e8; color: #000;">
+                        <p style="font-size: 1.3rem;">"20~30대 받고 싶어요"</p>
+                    </div>
+                    <div class="card" style="background: #e8e8e8; color: #000;">
+                        <p style="font-size: 1.3rem;">"젊은 손님이 많아야 잘 되는 거 아닌가요?"</p>
+                    </div>
+                </div>
+                <div class="card" style="background: #e8e8e8; color: #000; margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <p style="font-size: 1.3rem;">"요즘은 인스타니까 젊은 층이죠"</p>
+                </div>
+                <div class="warning-box" style="margin-top: 30px;">
+                    → 이건 희망사항이지 타겟이 아닙니다
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 16: 타겟 설정 질문 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box" style="max-width: 1000px;">
+                <h2 class="section-title" style="color: #142850;">올바른 타겟 설정의 출발점</h2>
+                <p style="font-size: 1.3rem; text-align: center; margin-bottom: 30px; color: #333;">
+                    타겟은 아래 질문에서 나옵니다
+                </p>
+                <div class="navy-box" style="margin: 15px 0;">
+                    <p style="font-size: 1.2rem;">내 샵에서 실제로 돈을 잘 쓰는 사람은 누구인가?</p>
+                </div>
+                <div class="navy-box" style="margin: 15px 0; background: #3b5089;">
+                    <p style="font-size: 1.2rem;">그 사람들은 왜 나를 선택했는가?</p>
+                </div>
+                <div class="navy-box" style="margin: 15px 0;">
+                    <p style="font-size: 1.2rem;">그 사람들은 어디에서 나를 알게 되었는가?</p>
+                </div>
+                <div class="navy-box" style="margin: 15px 0; background: #3b5089;">
+                    <p style="font-size: 1.2rem;">그 사람들은 가격에 어떤 반응을 보였는가?</p>
+                </div>
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.5rem; text-align: center;">
+                        💡 타겟이 정해지지 않으면<br>
+                        광고/릴스/콘텐츠는 전부 도박이 됩니다
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 17: 오퍼 정의 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">2️⃣ 오퍼 (Offer)</h2>
+                <div class="white-box">
+                    <div class="quote" style="background: #142850; color: #fff; border: none; font-size: 1.8rem;">
+                        <strong>"왜 지금, 왜 이걸, 왜 여기서<br>
+                        해야 하는지에 대한 이유"</strong>
+                    </div>
+                    <p style="font-size: 1.2rem; color: #666; text-align: center; margin-top: 30px;">
+                        오퍼는 가격 할인과 다르다<br>
+                        오퍼의 목적은 <strong style="color: #142850;">결정 부담을 줄이는 것</strong>이다
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 18: 오퍼 오해 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">❌ 원장님들이 오해하는 오퍼</h2>
+                <div class="grid-2">
+                    <div class="card" style="background: #f8f9fa; color: #666;">
+                        <h3 style="color: #999;">할인</h3>
+                    </div>
+                    <div class="card" style="background: #f8f9fa; color: #666;">
+                        <h3 style="color: #999;">이벤트</h3>
+                    </div>
+                </div>
+                <div class="card" style="background: #f8f9fa; color: #666; margin-top: 20px; max-width: 400px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: #999;">리터치 포함</h3>
+                </div>
+                <div class="warning-box" style="margin-top: 30px;">
+                    → 이건 조건이지 오퍼가 아닙니다
+                </div>
+                <div class="black-box" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 20px; text-align: center;">✅ 진짜 오퍼의 역할</h3>
+                    <p style="font-size: 1.2rem; text-align: center; color: #aaa;">
+                        "관심은 있는데… 지금 당장 해야 할 이유는 모르겠어"
+                    </p>
+                    <p style="font-size: 1.4rem; text-align: center; margin-top: 20px;">
+                        → 오퍼는 이 망설임을 끊어주는 장치입니다
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 19: 오퍼 4요소 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box" style="max-width: 1200px;">
+                <h2 class="section-title" style="color: #142850;">오퍼의 국룰 구성 (4요소)</h2>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card">
+                        <h3>1. 대상 명확화</h3>
+                        <p style="margin-top: 15px; font-size: 1rem;">
+                            "눈썹 처음 하시는 분"<br>
+                            "기존 시술 실패 경험 있으신 분"<br>
+                            "자연눈썹 원하시는 40대 이상"
+                        </p>
+                    </div>
+                    <div class="card" style="background: #3b5089;">
+                        <h3>2. 지금 해야 하는 이유</h3>
+                        <p style="margin-top: 15px; font-size: 1rem;">
+                            기간 한정 / 선착순<br>
+                            현재 상태<br>
+                            (지금 안 하면 더 어려워짐)
+                        </p>
+                    </div>
+                    <div class="card" style="background: #4f649d;">
+                        <h3>3. 리스크 제거</h3>
+                        <p style="margin-top: 15px; font-size: 1rem;">
+                            상담만 가능<br>
+                            강요 없음<br>
+                            내 상태 진단 위주
+                        </p>
+                    </div>
+                    <div class="card">
+                        <h3>4. 얻는 결과 한 문장</h3>
+                        <p style="margin-top: 15px; font-size: 1rem;">
+                            "실패 확률을 줄이는 선택"<br>
+                            "내 눈썹에 맞는 방향을<br>알게 됨"
+                        </p>
+                    </div>
+                </div>
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.5rem; text-align: center;">
+                        💡 오퍼가 없으면 사람은 저장만 하고 행동하지 않습니다
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 20: 크리에이티브 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">3️⃣ 크리에이티브 (Creative)</h2>
+                <div class="white-box">
+                    <div class="quote" style="background: #142850; color: #fff; border: none; font-size: 1.8rem;">
+                        <strong>광고/릴스에서 고객이<br>
+                        처음 마주치는 '입구'</strong>
+                    </div>
+                    <p style="font-size: 1.2rem; color: #666; text-align: center; margin-top: 30px;">
+                        크리에이티브의 목적은<br>
+                        ❌ 설명 / ❌ 설득이 아니라<br>
+                        <strong style="color: #142850; font-size: 1.4rem;">✅ "이건 내 얘기다"라고 느끼게 하는 것</strong>
+                    </p>
+                </div>
+                <div class="warning-box" style="margin-top: 30px;">
+                    ⚠️ 3초 안에 이해되지 않으면 끝입니다
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 21: 크리에이티브 구조 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box" style="max-width: 1000px;">
+                <h2 class="section-title" style="color: #142850;">크리에이티브의 국룰 구조</h2>
+                <div class="navy-box" style="margin: 20px 0;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">1️⃣ 문제 직격</h3>
+                    <p style="font-size: 1.1rem;">
+                        "광고비 쓰는데 문의 없는 분"<br>
+                        "릴스 열심히 올리는데 예약 없는 분"
+                    </p>
+                </div>
+                <div class="navy-box" style="margin: 20px 0; background: #3b5089;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">2️⃣ 원인 반전</h3>
+                    <p style="font-size: 1.1rem;">
+                        "광고가 아니라 구조 문제입니다"<br>
+                        "릴스가 아니라 순서 문제입니다"
+                    </p>
+                </div>
+                <div class="navy-box" style="margin: 20px 0; background: #4f649d;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 15px;">3️⃣ 다음 행동 암시</h3>
+                    <p style="font-size: 1.1rem;">
+                        "이걸 먼저 확인하세요"<br>
+                        "이 구조가 없으면 광고는 의미 없습니다"
+                    </p>
+                </div>
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.5rem; text-align: center;">
+                        💡 크리에이티브는 랜딩으로 보내는 화살표입니다<br>
+                        <span style="font-size: 1.1rem; color: #aaa;">여기서 모든 걸 설명하려 하면 광고도, 릴스도 망합니다</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 22: 랜딩 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">4️⃣ 랜딩 (Landing)</h2>
+                <div class="quote" style="background: #142850; color: #fff; border: none; font-size: 1.8rem;">
+                    <strong>고객이 '결정하기 전에'<br>
+                    머무르는 공간</strong>
+                </div>
+                <div class="warning-box" style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">❌ 원장님 현실</h3>
+                    <p>릴스만 있음 / 광고 눌렀는데 어디로 가야 할지 모름<br>
+                    플레이스/프로필 정보 부족</p>
+                    <p style="margin-top: 15px;">→ 고객은 구경만 하고 나갑니다</p>
+                </div>
+                <div class="black-box" style="margin-top: 30px;">
+                    <h3 style="font-size: 1.8rem; text-align: center; margin-bottom: 20px;">✅ 랜딩의 진짜 역할</h3>
+                    <p style="text-align: center; font-size: 1.2rem;">
+                        설득 ❌  감동 ❌<br>
+                        <strong style="font-size: 1.5rem; color: #fff;">정보 정리 + 불안 해소 ✅</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 23: 랜딩 최소 구성 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">랜딩의 최소 구성 (국룰)</h2>
+                <div class="white-box">
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px;">
+                        <p style="font-size: 1.1rem;">1. 이 서비스가 누구에게 맞는지</p>
+                    </div>
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px; background: #3b5089;">
+                        <p style="font-size: 1.1rem;">2. 가격 범위 (정확하지 않아도 됨)</p>
+                    </div>
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px;">
+                        <p style="font-size: 1.1rem;">3. 진행 방식 (상담 → 시술)</p>
+                    </div>
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px; background: #3b5089;">
+                        <p style="font-size: 1.1rem;">4. 자주 묻는 질문 3~5개</p>
+                    </div>
+                    <div class="navy-box" style="margin: 10px 0; padding: 20px;">
+                        <p style="font-size: 1.1rem;">5. 행동 버튼 (예약 / 상담)</p>
+                    </div>
+                </div>
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.4rem; text-align: center;">
+                        💡 랜딩이 없는 광고는<br>
+                        사람을 데려와서 길바닥에 세워두는 것입니다
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 24: 전환 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box">
+                <h2 class="section-title" style="color: #142850;">5️⃣ 전환 (Conversion)</h2>
+                <div class="quote" style="background: #142850; color: #fff; border: none; font-size: 1.8rem;">
+                    <strong>고객이 실제로 행동하게 만드는 장치</strong>
+                </div>
+                <p style="font-size: 1.2rem; color: #666; text-align: center; margin-top: 30px;">
+                    고객의 <strong>귀찮음·불안·부담</strong>을<br>
+                    대신 처리해주는 시스템
+                </p>
+                <div class="warning-box" style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">❌ 전환이 안 되는 이유</h3>
+                    <p>"DM 주세요" / "문의 주세요"</p>
+                    <p style="margin-top: 15px;">→ 고객 입장에서는 너무 번거롭고, 너무 불안합니다</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 25: 전환 국룰 -->
+        <section class="slide bg-gray">
+            <div class="content-box white-box" style="max-width: 1000px;">
+                <h2 class="section-title" style="color: #142850;">✅ 전환의 국룰</h2>
+                <div class="grid-2" style="margin-top: 30px;">
+                    <div class="card">
+                        <h3>생각하지 않게<br>만들 것</h3>
+                    </div>
+                    <div class="card" style="background: #3b5089;">
+                        <h3>망설이지 않게<br>만들 것</h3>
+                    </div>
+                </div>
+                <div class="card" style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    <h3>선택지를<br>단순화할 것</h3>
+                </div>
+                <h3 style="font-size: 1.8rem; margin-top: 40px; margin-bottom: 20px; color: #142850;">전환 장치 예시</h3>
+                <div class="navy-box" style="margin: 10px 0; padding: 20px;">
+                    <p style="font-size: 1.1rem;">✓ 상담 신청 폼</p>
+                </div>
+                <div class="navy-box" style="margin: 10px 0; padding: 20px; background: #3b5089;">
+                    <p style="font-size: 1.1rem;">✓ 예약 가능 날짜 표시</p>
+                </div>
+                <div class="navy-box" style="margin: 10px 0; padding: 20px;">
+                    <p style="font-size: 1.1rem;">✓ "상담만 진행 가능" 문구</p>
+                </div>
+                <div class="navy-box" style="margin: 10px 0; padding: 20px; background: #3b5089;">
+                    <p style="font-size: 1.1rem;">✓ "선착순 마감" 안내</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 26: 구조의 본질 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <h2 class="section-title">이 구조의 본질</h2>
+                <div class="white-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.8rem; text-align: center; color: #333; line-height: 2;">
+                        이 5단계 구조는<br>
+                        광고 전용 공식이 아니라<br>
+                        <strong style="font-size: 2.2rem; color: #142850;">콘텐츠 제작 공식입니다</strong>
+                    </p>
+                    <p style="font-size: 1.3rem; text-align: center; color: #666; margin-top: 30px;">
+                        릴스, 블로그, 광고, 상담<br>
+                        👉 전부 이 순서로 설계되어야 합니다
+                    </p>
+                </div>
+                <div class="black-box" style="margin-top: 30px;">
+                    <p style="font-size: 1.8rem; text-align: center;">
+                        광고는 이 구조를<br>
+                        <strong style="font-size: 2rem;">돈으로 증폭시키는 수단일 뿐입니다</strong>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 27: 핵심 요약 -->
+        <section class="slide bg-white">
+            <div class="content-box white-box" style="max-width: 1000px;">
+                <h2 class="section-title" style="color: #142850;">핵심 요약</h2>
+                <div class="navy-box" style="margin: 15px 0; padding: 25px;">
+                    <p style="font-size: 1.2rem;"><strong>1. 타겟</strong> - 실제로 돈을 쓰는 사람</p>
+                </div>
+                <div class="navy-box" style="margin: 15px 0; padding: 25px; background: #3b5089;">
+                    <p style="font-size: 1.2rem;"><strong>2. 오퍼</strong> - 지금 해야 하는 이유</p>
+                </div>
+                <div class="navy-box" style="margin: 15px 0; padding: 25px; background: #4f649d;">
+                    <p style="font-size: 1.2rem;"><strong>3. 크리에이티브</strong> - "이건 내 얘기다" 3초 안에</p>
+                </div>
+                <div class="navy-box" style="margin: 15px 0; padding: 25px; background: #273C75;">
+                    <p style="font-size: 1.2rem;"><strong>4. 랜딩</strong> - 정보 정리 + 불안 해소</p>
+                </div>
+                <div class="navy-box" style="margin: 15px 0; padding: 25px; background: #142850;">
+                    <p style="font-size: 1.2rem;"><strong>5. 전환</strong> - 생각·망설임 제거</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 슬라이드 28: 마무리 -->
+        <section class="slide bg-deep-navy">
+            <div class="content-box">
+                <div class="white-box">
+                    <p style="font-size: 2.5rem; text-align: center; color: #142850; font-weight: 700; line-height: 1.6;">
+                        광고가 어려운 게 아니라<br>
+                        광고 전에 필요한<br>
+                        <span style="font-size: 3rem;">구조가 없었던 겁니다</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // 스크롤 진행률 표시
+        const container = document.getElementById('slideContainer');
+        const indicator = document.getElementById('scrollIndicator');
+        const slides = document.querySelectorAll('.slide');
+
+        container.addEventListener('scroll', () => {
+            const scrollTop = container.scrollTop;
+            const scrollHeight = container.scrollHeight - container.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+
+            // 현재 슬라이드 계산
+            const currentSlide = Math.round((scrollTop / container.scrollHeight) * slides.length) + 1;
+            indicator.textContent = `슬라이드 ${Math.min(currentSlide, slides.length)} / ${slides.length}`;
+        });
+
+        // 키보드 네비게이션
+        document.addEventListener('keydown', (e) => {
+            const slideHeight = window.innerHeight;
+
+            if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+                e.preventDefault();
+                container.scrollBy({ top: slideHeight, behavior: 'smooth' });
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                e.preventDefault();
+                container.scrollBy({ top: -slideHeight, behavior: 'smooth' });
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                container.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>
